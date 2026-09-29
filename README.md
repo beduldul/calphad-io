@@ -90,8 +90,20 @@ dependency-free library that reads *and writes* both:
 
 ## Install
 
+**Not yet on PyPI** — there is no `pip install calphad-io` yet. Install from
+the repository:
+
 ```bash
-pip install calphad-io
+pip install git+https://github.com/beduldul/calphad-io.git
+```
+
+To work on the library itself, clone it and install it editable, as described
+in [`CONTRIBUTING.md`](CONTRIBUTING.md):
+
+```bash
+git clone https://github.com/beduldul/calphad-io
+cd calphad-io
+pip install -e ".[dev]"
 ```
 
 No dependencies. Python 3.10+.

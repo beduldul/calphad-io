@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- README install instructions corrected: `calphad-io` is not yet published to
+  PyPI, so the non-working `pip install calphad-io` command was replaced with a
+  working install-from-source command.
+
 ## [0.1.0] - 2026-09-29
 
 Initial release.
