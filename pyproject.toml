@@ -1,0 +1,70 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "calphad-io"
+version = "0.1.0"
+description = "Read, write and validate CALPHAD thermodynamic databases (Thermo-Calc .TDB and ChemSage/FactSage .DAT). Zero runtime dependencies."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "beduldul", email = "alkaysan07@gmail.com" }]
+keywords = ["calphad", "thermodynamics", "tdb", "chemsage", "factsage", "thermo-calc", "materials-science", "phase-diagram"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Chemistry",
+  "Topic :: Scientific/Engineering :: Physics",
+  "Typing :: Typed",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "mypy>=1.8", "ruff>=0.4"]
+
+[project.scripts]
+calphad-io = "calphad_io.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/beduldul/calphad-io"
+Repository = "https://github.com/beduldul/calphad-io"
+Issues = "https://github.com/beduldul/calphad-io/issues"
+Changelog = "https://github.com/beduldul/calphad-io/blob/main/CHANGELOG.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/calphad_io"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["src/calphad_io"]
+warn_unreachable = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "A", "C4", "SIM", "RUF"]
+# UP006/UP035 want builtin generics instead of `typing.List`/`Dict`. The code
+# uses `from __future__ import annotations` with explicit `typing` generics on
+# purpose: it keeps the annotations readable on 3.10 and mirrors the style of
+# the upstream projects whose formats this library reads.
+ignore = [
+  "UP006", "UP035",
+  # `format` is the correct domain name for this parameter; it shadows a
+  # builtin but the public API reads better for it, and callers use it as a
+  # keyword argument.
+  "A001", "A002",
+]
