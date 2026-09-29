@@ -100,7 +100,7 @@ import calphad_io
 
 db = calphad_io.load("steel.TDB")
 print(db.summary())
-# {'format': 'tdb', 'elements': 29, 'phases': 243, 'parameters': 1906, ...}
+# {'format': 'tdb', 'elements': 29, 'phases': 243, 'parameters': 1907, ...}
 
 for phase in db.phases:
     print(phase.name, phase.constituent_names())
@@ -128,8 +128,9 @@ Exit codes are stable: `0` clean, `1` validation errors or a refused conversion,
 
 ## The object model
 
-Five immutable frozen dataclasses, shared by both formats. Nothing is mutated
-after construction; transformations return new objects.
+Eight immutable frozen dataclasses in `calphad_io.model` (`Format` is a plain
+class of string constants, not a dataclass), shared by both formats. Nothing is
+mutated after construction; transformations return new objects.
 
 ```
 Database
