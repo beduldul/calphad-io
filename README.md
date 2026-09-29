@@ -78,10 +78,15 @@ dependency-free library that reads *and writes* both:
 * **Both are verified against an independent implementation.** `pycalphad` reads
   the regenerated files as *identical* — same elements, species, phases,
   sublattice constituents, model hints and every parameter expression — for
-  **all 25 regenerated files** — every file this library can read. For three of
-  them the computed Gibbs energy was also
-  compared across their temperature ranges and was **bit-identical**
-  (relative difference exactly `0.00e+00`).
+  **all 25 regenerated files** — every file this library can read. This is
+  reproducible end to end: [`scripts/generate.py`](scripts/generate.py)
+  regenerates the corpus from `tests/data/` with this library, and
+  [`scripts/verify.py`](scripts/verify.py) re-checks it against the originals
+  with pycalphad. See [`scripts/README.md`](scripts/README.md).
+* **Three of them were also compared thermodynamically.** For three regenerated
+  files the computed Gibbs energy was compared across their temperature ranges
+  and was **bit-identical** (relative difference exactly `0.00e+00`). This
+  comparison is not scripted in this repository.
 
 ## Install
 
@@ -210,10 +215,11 @@ The codes are: `duplicate_element`, `duplicate_phase`, `duplicate_parameter`,
 **Known caveats:**
 
 * **No FactSage reference.** Correctness is evidenced by `pycalphad` reading the
-  output as identical and by bit-identical computed energies — *not* by FactSage
-  accepting the file. This is the same blocker the pycalphad maintainer named in
-  2022. It is reduced but not eliminated, and the writer emits FactSage-8.0-style
-  layout as faithfully as the evidence allows.
+  output as identical (reproducible via [`scripts/verify.py`](scripts/verify.py))
+  and by bit-identical computed energies — *not* by FactSage accepting the file.
+  This is the same blocker the pycalphad maintainer named in 2022. It is reduced
+  but not eliminated, and the writer emits FactSage-8.0-style layout as
+  faithfully as the evidence allows.
 * **The validator still over-reports in a few DAT cases.** Constituent names in
   DAT are arbitrary human-readable labels with no enforced grammar
   (pycalphad#419), so a name that is neither an element nor a resolvable formula
@@ -234,10 +240,12 @@ pytest
 ```
 
 The test suite runs against **26 real databases** committed under `tests/data/`,
-sourced from `pycalphad` and `Thermochimica`. It asserts, for every one of them,
-that a parse → write → re-parse cycle preserves the model, and that TDB files
-come back byte-for-byte. Deliberately corrupted copies under
-`tests/data/corrupt/` exercise the validator.
+sourced from `pycalphad` and `Thermochimica`. **25 of them round-trip cleanly**:
+the suite asserts, for every file this library can read, that a parse → write →
+re-parse cycle preserves the model, and that all 9 TDB files come back
+byte-for-byte. The 26th, `FeMnCaS-1.dat`, is refused by design rather than
+round-tripped — it uses the `SUBI` model (see Limitations). Deliberately
+corrupted copies under `tests/data/corrupt/` exercise the validator.
 
 ## Prior art and credits
 

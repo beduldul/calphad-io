@@ -47,3 +47,5 @@ Initial release.
   it reports all 25 regenerated databases it can read as semantically identical
   to the originals, including model hints. (`FeMnCaS-1.dat` uses `SUBI`, which
   pycalphad cannot read either, so it is refused rather than compared.)
+- That comparison is reproducible end to end via `scripts/generate.py` and
+  `scripts/verify.py`; see `scripts/README.md`.
