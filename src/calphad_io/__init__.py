@@ -44,7 +44,7 @@ from .model import (
 )
 from .validate import Finding, Severity, validate
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 __all__ = [
     "CalphadIOError",

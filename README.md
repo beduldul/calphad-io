@@ -1,4 +1,5 @@
 [![CI](https://github.com/beduldul/calphad-io/actions/workflows/ci.yml/badge.svg)](https://github.com/beduldul/calphad-io/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/calphad-io.svg)](https://pypi.org/project/calphad-io/)
 # calphad-io
 
 **Read, write and validate CALPHAD thermodynamic databases — Thermo-Calc `.TDB`
@@ -91,8 +92,11 @@ dependency-free library that reads *and writes* both:
 
 ## Install
 
-**Not yet on PyPI** — there is no `pip install calphad-io` yet. Install from
-the repository:
+```bash
+pip install calphad-io
+```
+
+To track `main` instead of a release:
 
 ```bash
 pip install git+https://github.com/beduldul/calphad-io.git

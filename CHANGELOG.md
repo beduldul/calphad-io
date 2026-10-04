@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-10-04
+
+### Changed
+
+- Documentation only: the install instructions now point at PyPI, and the PyPI
+  badge was added.
+
 ## [0.1.1] - 2026-10-04
 
 ### Changed
@@ -13,9 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Packaging and release metadata only; no code changes. Added complete PyPI
   metadata (PEP 639 `license` expression, author, project URLs and classifiers)
   and a Trusted Publishing (OIDC) release workflow that publishes on `v*` tags.
-- README install instructions corrected: `calphad-io` is not yet published to
-  PyPI, so the non-working `pip install calphad-io` command was replaced with a
-  working install-from-source command.
+- README install instructions corrected: `calphad-io` was not yet published to
+  PyPI at the time, so the non-working `pip install calphad-io` command was
+  replaced with a working install-from-source command.
 
 ## [0.1.0] - 2026-09-29
 

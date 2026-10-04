@@ -8,14 +8,15 @@ Two parts: a one-time setup you do once, and a per-release flow you repeat.
 
 ---
 
-## Part 1 — One-time setup (owner, do this once)
+## Part 1 — One-time setup (owner, done)
 
-You must do these; an automated agent cannot create accounts or click PyPI UI.
+> **Done — `calphad-io` 0.1.1 is published.** The pending publisher was
+> converted to a normal publisher on the project, so this section is kept only
+> as a record of how the first release was set up. Skip it for future releases.
 
 1. **Create a PyPI account** if you do not have one: <https://pypi.org/account/register/>
 2. **Enable 2FA** on that account. PyPI requires 2FA to publish.
-3. **Add a *pending* publisher.** `calphad-io` does not exist on PyPI yet, so use
-   the *pending* publisher form, not the "existing project" form:
+3. **Add a *pending* publisher** (this is what the first release used):
    <https://pypi.org/manage/account/publishing/>
 
    Enter **exactly** these values (they must match the workflow byte-for-byte):
@@ -66,22 +67,16 @@ for approval.
 
 ## README install line
 
-Once the first release is live, the README install line can be simplified from:
-
-```bash
-pip install git+https://github.com/beduldul/calphad-io.git
-```
-
-to:
+The first release is live, so the README install line is the plain PyPI
+command:
 
 ```bash
 pip install calphad-io
 ```
 
-This has **deliberately not been changed yet**: `calphad-io` is not on PyPI
-(<https://pypi.org/pypi/calphad-io/json> returns HTTP 404), so the current
-`git+https://` line is the only one that works today. Change it in the same
-commit that follows the first successful publish.
+A GitHub-install alternative is kept only for tracking `main` ahead of a
+release, and is labelled as such. If a future release is ever yanked, revisit
+this line rather than assuming the PyPI install still works.
 
 ---
 
