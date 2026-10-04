@@ -1,3 +1,4 @@
+[![CI](https://github.com/beduldul/calphad-io/actions/workflows/ci.yml/badge.svg)](https://github.com/beduldul/calphad-io/actions/workflows/ci.yml)
 # calphad-io
 
 **Read, write and validate CALPHAD thermodynamic databases — Thermo-Calc `.TDB`
