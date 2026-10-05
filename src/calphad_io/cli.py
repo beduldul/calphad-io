@@ -276,9 +276,21 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """Entry point.  Returns the process exit code."""
+    """Entry point.  Returns the process exit code.
+
+    A usage error exits :data:`EXIT_USAGE` (3), as documented. ``argparse``
+    exits ``2`` on its own for a bad command line, which would contradict the
+    documented contract, so its ``SystemExit`` is caught and re-raised with the
+    documented code. ``--help``/``--version`` exit ``0`` and pass through.
+    """
     parser = build_parser()
-    args = parser.parse_args(argv)
+    try:
+        args = parser.parse_args(argv)
+    except SystemExit as exc:
+        code = exc.code if isinstance(exc.code, int) else 2
+        if code == 0:
+            raise
+        raise SystemExit(EXIT_USAGE) from None
 
     if not getattr(args, "command", None):
         parser.print_help()

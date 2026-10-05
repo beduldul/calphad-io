@@ -226,3 +226,48 @@ def test_cli_is_runnable_as_a_module() -> None:
     )
     assert result.returncode == 0
     assert "calphad-io" in result.stdout
+
+
+# ---------------------------------------------------------------------------
+# documented exit-code contract
+# ---------------------------------------------------------------------------
+#
+# The README publishes exit codes 0/1/2/3. Nothing asserted the usage code, so
+# the CLI drifted to argparse's default 2 while the README (and the unused
+# EXIT_USAGE constant) said 3. These run the real CLI in a subprocess and assert
+# the real process exit code, so the contract is pinned end to end.
+
+
+def _cli(*args: str) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        [sys.executable, "-m", "calphad_io.cli", *args],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+
+def test_contract_clean_exits_zero() -> None:
+    assert _cli("info", HO_DAT).returncode == 0
+
+
+def test_contract_refused_conversion_exits_one() -> None:
+    result = _cli("convert", HO_DAT, "--to", "tdb")
+    assert result.returncode == 1
+    assert "error:" in result.stderr
+
+
+def test_contract_unparseable_exits_two() -> None:
+    corrupt = os.path.join(DATA_DIR, "corrupt", "empty.TDB")
+    assert _cli("info", corrupt).returncode == 2
+
+
+def test_contract_bad_usage_exits_three_not_two() -> None:
+    """A missing argument must exit 3, as the README documents — not argparse's 2."""
+    result = _cli("info")  # no path argument
+    assert result.returncode == 3
+    assert "usage:" in result.stderr
+
+
+def test_contract_help_still_exits_zero() -> None:
+    assert _cli("--help").returncode == 0

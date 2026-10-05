@@ -6,6 +6,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-10-05
+
+### Fixed
+
+- **Bad usage now exits `3`, matching the documented contract.** The README
+  published `3` for bad usage and `EXIT_USAGE = 3` existed in the code, but
+  `main()` did not catch argparse's `SystemExit`, so a bad command line exited
+  argparse's default `2`. `main()` now maps argparse's usage error to
+  `EXIT_USAGE`. This changes the observed exit code for bad usage from `2` to
+  `3`. (`--help` and `--version` still exit `0`.)
+
+### Added
+
+- Tests pin every documented exit code (0/1/2/3) by running the real CLI in a
+  subprocess, so the README's exit-code table cannot drift again.
+
 ## [0.1.2] - 2026-10-04
 
 ### Changed
