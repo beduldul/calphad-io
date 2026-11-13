@@ -286,10 +286,12 @@ def _write_mqmqa_phase(
         out.append("".join(format_number(c, 13) for c in quadruplet.coordinations))
 
     for term in phase.subq_excess_terms:
-        out.append(format_integer(term.mixing_type, 4) + " " + term.mixing_code)
+        out.append(format_integer(term.mixing_type, 4))
+        out.append(term.mixing_code)
         out.append("".join(format_integer(v, 6) for v in term.mixing_constants))
         out.append("".join(format_integer(v, 6) for v in term.mixing_exponents))
-        out.append("".join(format_number(v, 13) for v in term.metadata))
+        out.append("".join(format_number(v, 13) for v in term.metadata[:6]))
+        out.append("".join(format_number(v, 13) for v in term.metadata[6:]))
         out.append(
             format_integer(term.additional_cation, 6)
             + format_integer(term.additional_anion, 6)
